@@ -3,4 +3,4 @@
 	url = https://github.com/DorkmasterFlek/donation-tracker-ui.git
 [submodule "tracker"]
 	path = tracker
-	url = https://github.com/DorkmasterFlek/donation-tracker.git
+	url = https://github.com/esamarathon/donation-tracker.git
