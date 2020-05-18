@@ -1,0 +1,26 @@
+version: "3.7"
+services:
+  tracker:
+    image: "esamarathon/tracker:corona"
+    build: .
+    volumes:
+      - "./db/testdb:/usr/src/app/db/testdb"
+      - "./blank.json:/usr/src/app/blank.json"
+      - "./tracker/migrations/:/usr/src/app/tracker/migrations/"
+    environment:
+      - TRACKER_ALLOWED_HOSTS="localhost, esatracker.eu.ngrok.io"
+      - TRACKER_DOMAIN="localhost"
+      - TRACKER_DEBUG=True
+#      - TRACKER_DATABASES='{"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": "db/testdb"}}'
+      - TRACKER_TIME_ZONE="Europe/Stockholm"
+      - TRACKER_SITE_NAME="ESA Dev Tracker"
+      - TRACKER_SITE_PREFIX="/"
+      - TRACKER_SECRET_KEY="HAhAHAHhahahahhahahhahahhahahahahha"
+      - TRACKER_STATIC_URL="/static"
+      - TRACKER_STATIC_ROOT="/var/www/static"
+      - TRACKER_HAS_GDOC=False
+      - TRACKER_HAS_EMAIL=False
+      - TRACKER_USE_NEW_DONATE_LAYOUT=False
+    ports:
+      - "8000:8000"
+

@@ -38,9 +38,6 @@ RUN mkdir -p /usr/src/app/tracker /usr/src/app/tracker_ui /usr/src/app/db
 COPY tracker/requirements.txt /usr/src/app/tracker/
 RUN (cd /usr/src/app/tracker && pip install --no-cache-dir -r requirements.txt)
 
-COPY django-paypal /usr/src/app/django-paypal
-RUN (cd /usr/src/app/django-paypal && python setup.py install)
-
 COPY *.py *.json /usr/src/app/
 COPY tracker/ /usr/src/app/tracker/
 
