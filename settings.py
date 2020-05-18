@@ -103,16 +103,15 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
 
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+    'django.middleware.common.CommonMiddleware',
+)
+
 
 SESSION_COOKIE_NAME = 'tracker_session'
 
@@ -151,11 +150,11 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    'bootstrap3',
+    #'bootstrap3',
     'post_office',
     'paypal.standard.ipn',
     'tracker',
-    'tracker_ui',
+    #'tracker_ui',
     'timezone_field',
     'ajax_select',
     'mptt',
@@ -187,6 +186,8 @@ if local.HAS_EMAIL:
   EMAIL_HOST_PASSWORD = local.EMAIL_HOST_PASSWORD
   MANDRILL_API_KEY = local.EMAIL_HOST_PASSWORD # the API key is the same as the SMTP password
   EMAIL_FROM_USER = local.EMAIL_FROM_USER
+  EMAIL_USE_TLS = local.EMAIL_USE_TLS
+  EMAIL_USE_SSL = local.EMAIL_USE_SSL
 
 if local.HAS_GOOGLE_APP_ID:
   GOOGLE_CLIENT_ID = local.GOOGLE_CLIENT_ID

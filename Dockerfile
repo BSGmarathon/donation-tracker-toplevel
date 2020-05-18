@@ -27,7 +27,8 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
 RUN apt-get update && apt-get install -y \
 		gcc \
 		gettext \
-		mysql-client libmysqlclient-dev \
+		default-mysql-client \
+		default-libmysqlclient-dev \
 		postgresql-client libpq-dev \
 		sqlite3 \
 		locales-all \
@@ -37,28 +38,23 @@ RUN mkdir -p /usr/src/app/tracker /usr/src/app/tracker_ui /usr/src/app/db
 COPY tracker/requirements.txt /usr/src/app/tracker/
 RUN (cd /usr/src/app/tracker && pip install --no-cache-dir -r requirements.txt)
 
-COPY tracker_ui/requirements.txt /usr/src/app/tracker_ui/
-COPY tracker_ui/package.json /usr/src/app/tracker_ui/
-COPY tracker_ui/npm-shrinkwrap.json /usr/src/app/tracker_ui/
-RUN (cd /usr/src/app/tracker_ui && pip install --no-cache-dir -r requirements.txt && npm i)
-
 COPY django-paypal /usr/src/app/django-paypal
 RUN (cd /usr/src/app/django-paypal && python setup.py install)
 
 COPY *.py *.json /usr/src/app/
 COPY tracker/ /usr/src/app/tracker/
-COPY tracker_ui/ /usr/src/app/tracker_ui/
 
 WORKDIR /usr/src/app
 
-RUN ["python", "manage.py", "migrate"]
-RUN ["python", "manage.py", "loaddata", "blank.json"]
+#RUN ["python", "manage.py", "migrate"]
+#RUN ["python", "manage.py", "loaddata", "blank.json"]
+RUN rm blank.json
 
-ARG superusername=admin
-ARG superuserpassword=password
+#ARG superusername=admin
+#ARG superuserpassword=password
 
-RUN python manage.py createsuperuser --noinput --email nobody@example.com --username ${superusername}
-RUN yes ${superuserpassword} | python manage.py changepassword ${superusername}
+#RUN python manage.py createsuperuser --noinput --email nobody@example.com --username ${superusername}
+#RUN yes ${superuserpassword} | python manage.py changepassword ${superusername}
 
 EXPOSE 8080
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
