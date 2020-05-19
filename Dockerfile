@@ -38,6 +38,7 @@ RUN mkdir -p /usr/src/app/tracker /usr/src/app/tracker_ui /usr/src/app/db
 COPY tracker/requirements.txt /usr/src/app/tracker/
 RUN (cd /usr/src/app/tracker && pip install --no-cache-dir -r requirements.txt)
 
+COPY entrypoint.sh /usr/src/app/
 COPY *.py *.json /usr/src/app/
 COPY tracker/ /usr/src/app/tracker/
 
@@ -45,7 +46,6 @@ WORKDIR /usr/src/app
 
 #RUN ["python", "manage.py", "migrate"]
 #RUN ["python", "manage.py", "loaddata", "blank.json"]
-RUN rm blank.json
 
 #ARG superusername=admin
 #ARG superuserpassword=password
@@ -53,5 +53,5 @@ RUN rm blank.json
 #RUN python manage.py createsuperuser --noinput --email nobody@example.com --username ${superusername}
 #RUN yes ${superuserpassword} | python manage.py changepassword ${superusername}
 
-EXPOSE 8080
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+EXPOSE 8000
+CMD ./entrypoint.sh
