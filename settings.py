@@ -84,6 +84,8 @@ STATIC_ROOT = local.STATIC_ROOT
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = local.STATIC_URL #'/static/'
 
+print local.STATIC_URL
+
 # Additional locations of static files
 STATICFILES_DIRS = local.STATICFILES_DIRS
 
@@ -239,3 +241,7 @@ CACHES = {
         'LOCATION': '/var/tmp/django_cache',
     }
 }
+
+USE_AMQP = local.USE_AMQP
+if USE_AMQP:
+    AMQP_CONNECTIONSTRING = local.AMQP_CONNECTIONSTRING
