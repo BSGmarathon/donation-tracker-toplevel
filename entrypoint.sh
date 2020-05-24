@@ -5,5 +5,7 @@ python manage.py collectstatic --noinput
 if [ -x "$command -v gunicorn"]; then
     gunicorn wsgi
 else
+    echo "Gunicorn not installed: Using built-in server."
+    watchmedo shell-command --patterns="*.css" -R -c "python manage.py collectstatic --noinput" &
     python manage.py runserver 0.0.0.0:8000
 fi

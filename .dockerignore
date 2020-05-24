@@ -1,3 +1,6 @@
-.git
+.git/
 run.py
 db/
+**/*.pyc
+node_modules/
+local.py

@@ -1,12 +1,17 @@
 version: "3.7"
 services:
-  tracker:
-    image: "esamarathon/tracker:corona"
-    build: .
+  app:
+    image: "esamarathon/tracker:development"
+    build: 
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - "./db/testdb:/usr/src/app/db/testdb"
       - "./blank.json:/usr/src/app/blank.json"
-      - "./tracker/migrations/:/usr/src/app/tracker/migrations/"
+      - "./tracker/:/usr/src/app/tracker/"
+      - "./local.py:/usr/src/app/local.py"
+      - "static:/var/www/static/:rw"
+
     environment:
       - TRACKER_ALLOWED_HOSTS="localhost, esatracker.eu.ngrok.io"
       - TRACKER_DOMAIN="localhost"
@@ -23,4 +28,14 @@ services:
       - TRACKER_USE_NEW_DONATE_LAYOUT=False
     ports:
       - "8000:8000"
-
+  web:
+    image: "nginx"
+    volumes:
+      - "static:/var/www/html/static/:ro"
+      - "./nginx_dev.conf:/etc/nginx/nginx.conf:ro"
+    ports:
+      - "8080:80"
+    depends_on:
+      - app
+volumes:
+  static:
