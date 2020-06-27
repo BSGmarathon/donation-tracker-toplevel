@@ -9,8 +9,9 @@ RUN apt-get update && apt-get install -y \
 		libpq-dev \
 		sqlite3 \
 		locales-all \
-    gunicorn \
 	--no-install-recommends && rm -rf /var/lib/apt/lists/*
+
+RUN pip install gunicorn==19.7.1
 
 RUN mkdir -p /usr/src/app/tracker /usr/src/app/tracker_ui /usr/src/app/db
 COPY tracker/requirements.txt /usr/src/app/tracker/

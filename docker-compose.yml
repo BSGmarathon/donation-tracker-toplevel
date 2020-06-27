@@ -29,9 +29,12 @@ services:
     ports:
       - "8000:8000"
   web:
-    image: "nginx"
+    image: "esamarathon/tracker-statics:latest"
+    build:
+      context: .
+      dockerfile: Dockerfile-statics
     volumes:
-      - "static:/var/www/html/static/:ro"
+#      - "static:/var/www/html/static/:ro"
       - "./nginx_dev.conf:/etc/nginx/nginx.conf:ro"
     ports:
       - "8080:80"
