@@ -1,7 +1,7 @@
 FROM esamarathon/tracker:production AS builder
 WORKDIR /usr/src/app
 COPY entrypoint.sh /usr/src/app/
-COPY local.py /usr/src/app/local.py
+COPY local_statics.py /usr/src/app/local.py
 RUN python manage.py collectstatic --noinput
 
 FROM nginx

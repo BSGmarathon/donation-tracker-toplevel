@@ -1,5 +1,0 @@
-.git/
-run.py
-db/
-**/*.pyc
-node_modules/
