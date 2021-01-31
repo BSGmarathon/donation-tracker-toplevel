@@ -1,4 +1,4 @@
-FROM esamarathon/tracker:production AS builder
+FROM esamarathon/tracker:latest AS builder
 WORKDIR /usr/src/app
 COPY entrypoint.sh /usr/src/app/
 COPY local_statics.py /usr/src/app/local.py

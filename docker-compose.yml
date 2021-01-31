@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   app:
-    image: "esamarathon/tracker:development"
+    image: "esamarathon/tracker:latest"
     build: 
       context: .
       dockerfile: Dockerfile
@@ -34,7 +34,7 @@ services:
       context: .
       dockerfile: Dockerfile-statics
     volumes:
-#      - "static:/var/www/html/static/:ro"
+      - "static:/var/www/html/static/:ro"
       - "./nginx_dev.conf:/etc/nginx/nginx.conf:ro"
     ports:
       - "8080:80"
