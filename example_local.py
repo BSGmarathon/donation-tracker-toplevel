@@ -18,6 +18,7 @@ DEBUG = True
 
 # Site name for admin headers.  Change this for your own event.
 SITE_NAME = 'Django'
+SITE_NAME_SHORT = '<Your organization name here>'
 
 # You can add your e-mail if you want to receive notifications of failures I think , but its probably not a good idea
 ADMINS = [

@@ -33,6 +33,8 @@ LOGOUT_REDIRECT_URL = SITE_PREFIX + 'index/'
 # Site name for admin headers
 SITE_NAME = local.SITE_NAME
 
+SITE_NAME_SHORT = local.SITE_NAME_SHORT
+
 # Append slash seems to be the way to go overall
 APPEND_SLASH = True
 

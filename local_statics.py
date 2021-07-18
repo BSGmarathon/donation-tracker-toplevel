@@ -27,6 +27,7 @@ DATABASES = {
 TIME_ZONE = 'Europe/Stockholm'
 
 SITE_NAME = 'Demo Tracker'
+SITE_NAME_SHORT = 'Demo'
 
 # set this to your site's prefix, This allows handling multiple deployments from a common url base
 SITE_PREFIX = '/'
