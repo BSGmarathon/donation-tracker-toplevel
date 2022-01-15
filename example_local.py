@@ -13,6 +13,12 @@ ALLOWED_HOSTS = [
 # to redirect registration and password resets to
 DOMAIN = 'your.domain.name'
 
+# Used by the Paypal integration for generating callback links.
+# Should in almost all cases be the same as DOMAIN, but this allows you to customize if your environment requires it.
+# Added when I had some issues with donations not working behind a reverse proxy due to bad link generation.
+# Also allows you to direct paypal to go via a proxy service like ngrok for development while allowing you to still use localhost.
+PAYPAL_DOMAIN = 'your.domain.name'
+
 # Leave this as true during development, so that you get error pages describing what went wrong
 DEBUG = True
 
@@ -72,3 +78,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # Are we using the revamped donate page layout?
 # The new layout has a revamped display of donation incentives and bid wars.
 USE_NEW_DONATE_LAYOUT = False
+
+# RabbitMQ integration settings.
+# If set to true, tracker will connect to the MQ server to deliver messages for each donation add & update.
+# Unless you know you need this, leave it at False.
+USE_AMQP = False
+#AMQP_CONNECTIONSTRING = "amqps://username:password@mq.example.com/v_host"
