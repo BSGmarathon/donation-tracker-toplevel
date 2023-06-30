@@ -1,27 +1,52 @@
+FROM node:18 AS client
+
+WORKDIR /app
+
+COPY ./tracker/package.json ./tracker/yarn.lock ./
+RUN yarn
+
+COPY \
+  ./tracker/.browserslistrc \
+  ./tracker/karma.conf.js \
+  ./tracker/declarations.d.ts \
+  ./tracker/postcss.config.js \
+  ./tracker/webpack.config.js \
+  ./
+COPY ./tracker/bundles bundles
+COPY ./tracker/tracker tracker
+RUN yarn build
+
 FROM python:3.11
-RUN apt-get update && apt-get install -y \
-		gcc \
-		gettext \
-		default-mysql-client \
-		default-libmysqlclient-dev \
-		postgresql-client libpq-dev \
-		sqlite3 \
-		locales-all \
-	--no-install-recommends && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /usr/src/app/tracker /usr/src/app/db
-# COPY tracker/requirements.txt /usr/src/app/tracker/
+WORKDIR /app
 
-COPY entrypoint.sh /usr/src/app/
-COPY *.py *.json /usr/src/app/
-COPY tracker/ /usr/src/app/tracker/
-#RUN (cd /usr/src/app && pip install --no-cache-dir -e ./tracker)
+RUN pip install django~=3.2
+RUN django-admin startproject tracker_development
 
-#RUN python -m pip install watchdog[watchmedo]
+WORKDIR /app/tracker_development/donation-tracker
 
-WORKDIR /usr/src/app
+COPY \
+  ./tracker/__init__.py \
+  ./tracker/.flake8 \
+  ./tracker/pyproject.toml \
+  ./tracker/README.md \
+  ./tracker/setup.py \
+  ./
 
-RUN pip install --no-cache-dir -e ./tracker
+COPY ./tracker/tracker tracker
+COPY --from=client /app/tracker tracker
+RUN pip install -e .
+
+WORKDIR /app/tracker_development
+COPY ./settings.py ./routing.py ./urls.py /app/tracker_development/tracker_development/
+COPY ./entrypoint.sh ./
+RUN mkdir db
+
+RUN apt update
+RUN apt install -y locales
+RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+RUN locale-gen en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
 
 #RUN ["python", "manage.py", "migrate"]
 #RUN ["python", "manage.py", "loaddata", "blank.json"]
@@ -32,5 +57,5 @@ RUN pip install --no-cache-dir -e ./tracker
 #RUN python manage.py createsuperuser --noinput --email nobody@example.com --username ${superusername}
 #RUN yes ${superuserpassword} | python manage.py changepassword ${superusername}
 
-EXPOSE 8000
-CMD ./entrypoint.sh
+#EXPOSE 8000
+ENTRYPOINT ./entrypoint.sh

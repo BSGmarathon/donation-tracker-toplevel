@@ -2,10 +2,12 @@
 
 import os
 
-try:
-    import local
-except ImportError:
-    import example_local as local
+import tracker_development.local as local
+
+# try:
+#     import tracker_development.local
+# except ImportError:
+#     import example_local as local
 
 # new settings
 TRACKER_HAS_CELERY = False
@@ -146,10 +148,10 @@ MIDDLEWARE = [
 
 SESSION_COOKIE_NAME = 'tracker_session'
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'tracker_development.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'wsgi.application'
+WSGI_APPLICATION = 'tracker_development.wsgi.application'
 
 TEMPLATES = [
     {

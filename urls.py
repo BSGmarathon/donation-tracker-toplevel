@@ -7,5 +7,5 @@ import ajax_select.urls
 urlpatterns = [
     path('admin/lookups/', include(ajax_select.urls)),
     path('admin/', admin.site.urls),
-    path('/', include(tracker.urls, namespace='tracker')),
+    path('', include(tracker.urls, namespace='tracker')),
 ]

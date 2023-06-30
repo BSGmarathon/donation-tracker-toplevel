@@ -6,12 +6,11 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - "./db/testdb:/usr/src/app/db/testdb"
-      - "./blank.json:/usr/src/app/blank.json"
-      - "./tracker/:/usr/src/app/tracker/"
-      - "./local.py:/usr/src/app/local.py"
+      - "./db/testdb:/app/tracker_development/tracker_development/db/testdb"
+      - "./blank.json:/app/tracker_development/blank.json"
+      - "./tracker/:/app/tracker_development/donation-tracker/"
+      - "./local.py:/app/tracker_development/tracker_development/local.py"
       - "static:/var/www/static/:rw"
-
     environment:
       - TRACKER_ALLOWED_HOSTS="localhost, esatracker.eu.ngrok.io"
       - TRACKER_DOMAIN="localhost"
