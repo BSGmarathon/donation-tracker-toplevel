@@ -164,12 +164,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                "django.template.context_processors.debug",
-                "django.template.context_processors.i18n",
-                "django.template.context_processors.media",
-                "django.template.context_processors.static",
-                "django.template.context_processors.request",
-                "tracker.context_processors.booleans",
             ],
         },
     },
@@ -203,12 +197,12 @@ AJAX_LOOKUP_CHANNELS = ajax_lookup_channels.AJAX_LOOKUP_CHANNELS
 ASGI_APPLICATION = 'routing.application'
 CHANNEL_LAYERS = {'default': {'BACKEND': 'channels.layers.InMemoryChannelLayer'}}
 
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'tracker.auth.EmailLoginAuthBackend',
-)
+# AUTHENTICATION_BACKENDS = (
+#     'django.contrib.auth.backends.ModelBackend',
+#     'tracker.auth.EmailLoginAuthBackend',
+# )
 
-AUTH_PROFILE_MODULE = 'tracker.UserProfile'
+# AUTH_PROFILE_MODULE = 'tracker.UserProfile'
 
 if local.HAS_GDOC:
   GDOC_USERNAME = local.GDOC_USERNAME

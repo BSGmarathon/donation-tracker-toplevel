@@ -34,8 +34,9 @@ COPY \
   ./
 
 COPY ./tracker/tracker tracker
-COPY --from=client /app/tracker tracker
+COPY --from=client /app/tracker/ tracker
 RUN pip install -e .
+RUN pip install gunicorn
 
 WORKDIR /app/tracker_development
 COPY ./settings.py ./routing.py ./urls.py /app/tracker_development/tracker_development/
@@ -56,6 +57,8 @@ ENV LC_ALL en_US.UTF-8
 
 #RUN python manage.py createsuperuser --noinput --email nobody@example.com --username ${superusername}
 #RUN yes ${superuserpassword} | python manage.py changepassword ${superusername}
+
+#RUN ls -hal donation-tracker/tracker/templates/ui/generated && exit 1
 
 #EXPOSE 8000
 ENTRYPOINT ./entrypoint.sh

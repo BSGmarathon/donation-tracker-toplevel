@@ -3,7 +3,7 @@ python manage.py migrate --noinput
 
 
 if [ -x "$(command -v gunicorn)" ]; then
-    gunicorn --bind 0.0.0.0:8000 wsgi
+    gunicorn --bind 0.0.0.0:8000 tracker_development.wsgi
 else
     echo "Gunicorn not installed: Using built-in server."
 #    python manage.py collectstatic --noinput

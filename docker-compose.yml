@@ -5,10 +5,13 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+#    entrypoint: /bin/bash
     volumes:
-      - "./db/testdb:/app/tracker_development/tracker_development/db/testdb"
+      - "./db:/app/tracker_development/db"
       - "./blank.json:/app/tracker_development/blank.json"
-      - "./tracker/:/app/tracker_development/donation-tracker/"
+#      - "./tracker/:/app/tracker_development/donation-tracker/"
       - "./local.py:/app/tracker_development/tracker_development/local.py"
       - "static:/var/www/static/:rw"
     environment:
@@ -40,4 +43,5 @@ services:
     depends_on:
       - app
 volumes:
-  static:
+  static: {}
+

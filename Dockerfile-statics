@@ -1,7 +1,31 @@
+FROM node:18 AS client
+
+WORKDIR /app
+
+COPY ./tracker/package.json ./tracker/yarn.lock ./
+RUN yarn
+
+COPY \
+  ./tracker/.browserslistrc \
+  ./tracker/karma.conf.js \
+  ./tracker/declarations.d.ts \
+  ./tracker/postcss.config.js \
+  ./tracker/webpack.config.js \
+  ./
+COPY ./tracker/bundles bundles
+COPY ./tracker/tracker tracker
+RUN yarn build
+
+## TODO: missing the gen folder
+
 FROM esamarathon/tracker:latest AS builder
-WORKDIR /usr/src/app
-COPY entrypoint.sh /usr/src/app/
-COPY local_statics.py /usr/src/app/local.py
+
+WORKDIR /app/tracker_development
+
+COPY --from=client /app/tracker tracker
+COPY entrypoint.sh /app/tracker_development
+COPY local_statics.py /app/tracker_development/tracker_development/local.py
+
 RUN python manage.py collectstatic --noinput
 
 FROM nginx
