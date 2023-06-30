@@ -36,11 +36,11 @@ ADMINS = [
 DATABASES = {
     'default': {
       'ENGINE': 'django.db.backends.sqlite3',
-      'NAME': 'db.sqlite3',
+      'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
   },
 }
 
-TIME_ZONE = 'America/New_York'
+TIME_ZONE = 'Europe/Amsterdam'
 
 # set this to your site's prefix, This allows handling multiple deployments from a common url base
 SITE_PREFIX = '/'

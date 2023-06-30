@@ -22,7 +22,7 @@
             "prizecoordinator": null,
             "pendingdonationemailtemplate": null,
             "prizecontributoremailtemplate": null,
-            "paypalcurrency": "USD",
+            "paypalcurrency": "EUR",
             "targetamount": "5.00"
         },
         "model": "tracker.event",

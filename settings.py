@@ -7,6 +7,13 @@ try:
 except ImportError:
     import example_local as local
 
+# new settings
+TRACKER_HAS_CELERY = False
+TRACKER_PRIVACY_POLICY_URL = ''
+TRACKER_SWEEPSTAKES_URL = ''
+TRACKER_PAGINATION_LIMIT = 500
+TRACKER_LOGO = ''
+
 BASE_DIR = os.path.dirname(__file__)
 
 DEBUG = local.DEBUG
@@ -47,6 +54,22 @@ TIME_ZONE = local.TIME_ZONE
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
+
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
 
 SITE_ID = 1
 
@@ -89,7 +112,7 @@ STATIC_ROOT = local.STATIC_ROOT
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = local.STATIC_URL #'/static/'
 
-print local.STATIC_URL
+print(local.STATIC_URL)
 
 # Additional locations of static files
 STATICFILES_DIRS = local.STATICFILES_DIRS
@@ -110,14 +133,15 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.common.CommonMiddleware',
-)
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
 
 
 SESSION_COOKIE_NAME = 'tracker_session'
@@ -150,18 +174,17 @@ TEMPLATES = [
 ]
 
 INSTALLED_APPS = (
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admin',
-    #'bootstrap3',
+    'channels',
     'post_office',
     'paypal.standard.ipn',
     'tracker',
-    #'tracker_ui',
+    'rest_framework',
     'timezone_field',
     'ajax_select',
     'mptt',
@@ -173,7 +196,10 @@ EMAIL_BACKEND = local.EMAIL_BACKEND
 # * * * * * ($DONATIONS_LOCATION/manage.py send_queued_mail >> send_mail.log 2>&1)
 
 # Pull in the tracker's lookup channels
-from tracker.ajax_lookup_channels import AJAX_LOOKUP_CHANNELS
+from tracker import ajax_lookup_channels
+AJAX_LOOKUP_CHANNELS = ajax_lookup_channels.AJAX_LOOKUP_CHANNELS
+ASGI_APPLICATION = 'routing.application'
+CHANNEL_LAYERS = {'default': {'BACKEND': 'channels.layers.InMemoryChannelLayer'}}
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -202,7 +228,7 @@ if local.HAS_GOOGLE_APP_ID:
   GOOGLE_CLIENT_SECRET = local.GOOGLE_CLIENT_SECRET
 
 if local.HAS_GIANTBOMB_API_KEY:
-  GIANTBOMB_API_KEY = local.GIANTBOMB_API_KEY
+  TRACKER_GIANTBOMB_API_KEY = local.GIANTBOMB_API_KEY
 
 # Flag for new donate page layout.
 USE_NEW_DONATE_LAYOUT = local.USE_NEW_DONATE_LAYOUT
@@ -251,3 +277,5 @@ CACHES = {
 USE_AMQP = local.USE_AMQP
 if USE_AMQP:
     AMQP_CONNECTIONSTRING = local.AMQP_CONNECTIONSTRING
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

@@ -44,6 +44,7 @@ But you could probably get away with the development image if the load is small.
 Typically there are three classes of images used in the project.
 
 ```
+ghcr.io/bsgmarathon/tracker:latest
 esamarathon/tracker:latest
 esamarathon/tracker:production
 ```
@@ -61,3 +62,7 @@ esamarathon/tracker-statics:latest
 Nginx webserver with the results of collectstatic stored in `/var/www/html/static/`
 Useful for simple production setups to serve the tracker static files, such as stylesheets and images.
 Build with `Dockerfile-statics`.
+
+## Trouble shooting
+1. Locale setting: https://stackoverflow.com/questions/18646520/unsupported-locale-setting-python-django-how-to-solve-this#24819625
+2. Generated static file location: /donation-tracker/tracker/gen
