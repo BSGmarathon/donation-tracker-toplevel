@@ -14,6 +14,7 @@ COPY \
   ./
 COPY ./tracker/bundles bundles
 COPY ./tracker/tracker tracker
+
 RUN yarn build
 
 FROM python:3.11
@@ -36,7 +37,7 @@ COPY \
 COPY ./tracker/tracker tracker
 COPY --from=client /app/tracker/ tracker
 RUN pip install -e .
-RUN pip install gunicorn
+#RUN pip install gunicorn
 
 WORKDIR /app/tracker_development
 COPY ./settings.py ./local_statics.py ./routing.py ./urls.py /app/tracker_development/tracker_development/

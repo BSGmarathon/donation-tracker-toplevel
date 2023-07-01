@@ -23,8 +23,8 @@ services:
       - TRACKER_SITE_NAME="ESA Dev Tracker"
       - TRACKER_SITE_PREFIX="/"
       - TRACKER_SECRET_KEY="HAhAHAHhahahahhahahhahahhahahahahha"
-#      - TRACKER_STATIC_URL="/static"
-#      - TRACKER_STATIC_ROOT="/var/www/html/static"
+      - TRACKER_STATIC_URL="/static"
+      - TRACKER_STATIC_ROOT="/var/www/html/static"
       - TRACKER_HAS_GDOC=False
       - TRACKER_HAS_EMAIL=False
       - TRACKER_USE_NEW_DONATE_LAYOUT=False
@@ -32,9 +32,6 @@ services:
       - "8000:8000"
   web:
     image: nginx:latest
-#    build:
-#      context: .
-#      dockerfile: Dockerfile-statics
     volumes:
       - "static:/var/www/html/static/:ro"
       - "./nginx_dev.conf:/etc/nginx/nginx.conf:ro"
@@ -43,5 +40,10 @@ services:
     depends_on:
       - app
 volumes:
-  static: {}
+  static:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /coding/bsg/donation-tracker-toplevel/static_data
 

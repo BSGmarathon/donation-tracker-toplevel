@@ -35,7 +35,7 @@ SITE_PREFIX = '/'
 SECRET_KEY = 'Replace This'
 
 STATICFILES_DIRS = (
-  # os.path.abspath('/var/www/html/static'),
+  # os.path.abspath('tracker/static/'),
   os.path.abspath('donation-tracker/tracker/static/'),
 )
 
