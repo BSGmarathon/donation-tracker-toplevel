@@ -2,12 +2,14 @@
 
 import os
 
-import tracker_development.local as local
 
-# try:
-#     import tracker_development.local
-# except ImportError:
-#     import example_local as local
+try:
+    import tracker_development.local as local
+except ImportError:
+    try:
+        import tracker_development.local_statics as local
+    except ImportError:
+        import tracker_development.example_local as local
 
 # new settings
 TRACKER_HAS_CELERY = False

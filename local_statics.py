@@ -35,11 +35,12 @@ SITE_PREFIX = '/'
 SECRET_KEY = 'Replace This'
 
 STATICFILES_DIRS = (
-  os.path.abspath('tracker/static/'),
-);
+  # os.path.abspath('/var/www/html/static'),
+  os.path.abspath('donation-tracker/tracker/static/'),
+)
 
 STATIC_URL = "/static" + SITE_PREFIX
-STATIC_ROOT = "/var/www/static" + SITE_PREFIX
+STATIC_ROOT = "/var/www/html/static" + SITE_PREFIX
 
 HAS_GDOC = False
 # GDOC_USERNAME = 'person@gmail.com'

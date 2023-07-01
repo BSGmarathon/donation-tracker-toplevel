@@ -39,7 +39,7 @@ RUN pip install -e .
 RUN pip install gunicorn
 
 WORKDIR /app/tracker_development
-COPY ./settings.py ./routing.py ./urls.py /app/tracker_development/tracker_development/
+COPY ./settings.py ./local_statics.py ./routing.py ./urls.py /app/tracker_development/tracker_development/
 COPY ./entrypoint.sh ./
 RUN mkdir db
 
@@ -48,6 +48,11 @@ RUN apt install -y locales
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 RUN locale-gen en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
+
+RUN mkdir -p /var/www/html/static
+RUN python manage.py collectstatic --noinput
+
+#RUN ls -hal /var/www/html/static/ && exit 1
 
 #RUN ["python", "manage.py", "migrate"]
 #RUN ["python", "manage.py", "loaddata", "blank.json"]

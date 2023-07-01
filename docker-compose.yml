@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   app:
-    image: "esamarathon/tracker:latest"
+#    image: "esamarathon/tracker:latest"
     build: 
       context: .
       dockerfile: Dockerfile
@@ -13,28 +13,28 @@ services:
       - "./blank.json:/app/tracker_development/blank.json"
 #      - "./tracker/:/app/tracker_development/donation-tracker/"
       - "./local.py:/app/tracker_development/tracker_development/local.py"
-      - "static:/var/www/static/:rw"
+      - "static:/var/www/html/static:rw"
     environment:
       - TRACKER_ALLOWED_HOSTS="localhost, esatracker.eu.ngrok.io"
       - TRACKER_DOMAIN="localhost"
       - TRACKER_DEBUG=True
 #      - TRACKER_DATABASES='{"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": "db/testdb"}}'
-      - TRACKER_TIME_ZONE="Europe/Stockholm"
+      - TRACKER_TIME_ZONE="Europe/Amsterdam"
       - TRACKER_SITE_NAME="ESA Dev Tracker"
       - TRACKER_SITE_PREFIX="/"
       - TRACKER_SECRET_KEY="HAhAHAHhahahahhahahhahahhahahahahha"
-      - TRACKER_STATIC_URL="/static"
-      - TRACKER_STATIC_ROOT="/var/www/static"
+#      - TRACKER_STATIC_URL="/static"
+#      - TRACKER_STATIC_ROOT="/var/www/html/static"
       - TRACKER_HAS_GDOC=False
       - TRACKER_HAS_EMAIL=False
       - TRACKER_USE_NEW_DONATE_LAYOUT=False
     ports:
       - "8000:8000"
   web:
-    image: "esamarathon/tracker-statics:latest"
-    build:
-      context: .
-      dockerfile: Dockerfile-statics
+    image: nginx:latest
+#    build:
+#      context: .
+#      dockerfile: Dockerfile-statics
     volumes:
       - "static:/var/www/html/static/:ro"
       - "./nginx_dev.conf:/etc/nginx/nginx.conf:ro"
