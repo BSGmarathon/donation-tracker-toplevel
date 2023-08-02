@@ -46,9 +46,12 @@ RUN mkdir db
 
 RUN apt update
 RUN apt install -y locales
-RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
-RUN locale-gen en_US.UTF-8
-ENV LC_ALL en_US.UTF-8
+#RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+RUN echo "nl_NL.UTF-8 UTF-8" >> /etc/locale.gen
+#RUN locale-gen en_US.UTF-8
+RUN locale-gen nl_NL.UTF-8
+#ENV LC_ALL en_US.UTF-8
+ENV LC_ALL nl_NL.UTF-8
 
 RUN mkdir -p /var/www/html/static
 RUN python manage.py collectstatic --noinput
