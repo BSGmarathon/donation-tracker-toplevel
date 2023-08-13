@@ -14,6 +14,7 @@ TRACKER_PRIVACY_POLICY_URL = ''
 TRACKER_SWEEPSTAKES_URL = ''
 TRACKER_PAGINATION_LIMIT = 500
 TRACKER_LOGO = ''
+PAYPAL_TEST = True
 
 # this is used as part of the auto-mailing services to identify where
 # to redirect registration and password resets to
