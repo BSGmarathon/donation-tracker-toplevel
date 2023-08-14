@@ -13,6 +13,7 @@ COPY \
   ./tracker/webpack.config.js \
   ./
 COPY ./tracker/bundles bundles
+COPY ./tracker/design design
 COPY ./tracker/tracker tracker
 
 RUN yarn build
@@ -56,8 +57,6 @@ ENV LC_ALL nl_NL.UTF-8
 RUN mkdir -p /var/www/html/static
 RUN python manage.py collectstatic --noinput
 
-#RUN ls -hal /var/www/html/static/ && exit 1
-
 #RUN ["python", "manage.py", "migrate"]
 #RUN ["python", "manage.py", "loaddata", "blank.json"]
 
@@ -67,7 +66,4 @@ RUN python manage.py collectstatic --noinput
 #RUN python manage.py createsuperuser --noinput --email nobody@example.com --username ${superusername}
 #RUN yes ${superuserpassword} | python manage.py changepassword ${superusername}
 
-#RUN ls -hal donation-tracker/tracker/templates/ui/generated && exit 1
-
-#EXPOSE 8000
 ENTRYPOINT ./entrypoint.sh
