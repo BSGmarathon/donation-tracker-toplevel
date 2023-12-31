@@ -11,7 +11,7 @@ services:
       - caddy
     volumes:
       - "tracker_db:/app/tracker_development/db:rw"
-      - "static:/var/www/html/static:rw"
+      - "tracker_static:/var/www/html/static:rw"
     # you have to supply this yourself
     configs:
       - source: local.py
@@ -52,7 +52,7 @@ configs:
     external: true
 
 volumes:
-  static: { }
+  tracker_static: { }
   tracker_db:
     external: true
   data:
