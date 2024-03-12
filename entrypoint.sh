@@ -24,7 +24,8 @@ rm -rf /var/ww/html/static/gen || true
 python manage.py collectstatic --noinput
 
 if [ -x "$(command -v gunicorn)" ]; then
-    gunicorn --bind 0.0.0.0:8000 tracker_development.wsgi
+#    gunicorn --bind 0.0.0.0:8000 tracker_development.wsgi
+    python -m gunicorn --bind 0.0.0.0:8000 tracker_development.asgi:application -k uvicorn.workers.UvicornWorker
 else
     echo "Gunicorn not installed: Using built-in server."
 #    watchmedo shell-command --patterns="*.css" -R -c "python manage.py collectstatic --noinput" &

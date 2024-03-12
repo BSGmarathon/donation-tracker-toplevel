@@ -18,7 +18,7 @@ COPY ./tracker/tracker tracker
 
 RUN yarn build
 
-FROM python:3.11
+FROM python:3.12
 
 WORKDIR /app
 
@@ -35,15 +35,17 @@ COPY \
   ./tracker/setup.py \
   ./
 
-COPY ./tracker/tracker tracker
 COPY --from=client /app/tracker/ tracker
+COPY ./tracker/tracker tracker
 RUN pip install -e .
-#RUN pip install gunicorn
+RUN pip install 'uvicorn[daphne]' gunicorn
 
 WORKDIR /app/tracker_development
-COPY ./settings.py ./local_statics.py ./routing.py ./urls.py /app/tracker_development/tracker_development/
+COPY ./settings.py ./wsgi.py ./asgi.py ./local_statics.py ./routing.py ./urls.py /app/tracker_development/tracker_development/
 COPY ./entrypoint.sh ./
 RUN mkdir db
+
+#RUN pip install ./donation-tracker
 
 RUN apt update
 RUN apt install -y locales

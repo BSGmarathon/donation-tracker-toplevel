@@ -5,9 +5,11 @@ import os
 
 try:
     import tracker_development.local as local
+    print('Loaded normal settings')
 except ImportError:
     try:
         import tracker_development.local_statics as local
+        print('Loaded statics settings')
     except ImportError:
         import tracker_development.example_local as local
 
@@ -82,15 +84,6 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = True
 
-gettext = lambda x: x
-LANGUAGES = (
-#	('de',gettext('German')),
-	('en',gettext('English')),
-#	('ja',gettext('Japanese')),
-#	('nl',gettext('Dutch')),
-#	('pl',gettext('Polish')),
-)
-
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale.
 USE_L10N = True
@@ -124,19 +117,19 @@ STATICFILES_DIRS = local.STATICFILES_DIRS
 
 # List of finder classes that know how to find static files in
 # various locations.
-STATICFILES_FINDERS = (
+STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-)
+]
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = local.SECRET_KEY
 
 # List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
+TEMPLATE_LOADERS = [
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-)
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -172,7 +165,7 @@ TEMPLATES = [
     },
 ]
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -187,7 +180,7 @@ INSTALLED_APPS = (
     'timezone_field',
     'ajax_select',
     'mptt',
-)
+]
 
 EMAIL_BACKEND = local.EMAIL_BACKEND
 
@@ -197,7 +190,7 @@ EMAIL_BACKEND = local.EMAIL_BACKEND
 # Pull in the tracker's lookup channels
 from tracker import ajax_lookup_channels
 AJAX_LOOKUP_CHANNELS = ajax_lookup_channels.AJAX_LOOKUP_CHANNELS
-ASGI_APPLICATION = 'routing.application'
+ASGI_APPLICATION = 'tracker_development.routing.application'
 CHANNEL_LAYERS = {'default': {'BACKEND': 'channels.layers.InMemoryChannelLayer'}}
 
 # AUTHENTICATION_BACKENDS = (
