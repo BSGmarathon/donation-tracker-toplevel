@@ -23,9 +23,13 @@ rm -rf /var/ww/html/static/gen || true
 # Collect all the static assets
 python manage.py collectstatic --noinput
 
-if [ -x "$(command -v gunicorn)" ]; then
-#    gunicorn --bind 0.0.0.0:8000 tracker_development.wsgi
-    gunicorn --bind 0.0.0.0:8000 tracker_development.asgi:application -k uvicorn.workers.UvicornWorker
+if [ -x "$(command -v daphne)" ]; then
+    echo "Using daphne server"
+  daphne -b 0.0.0.0 -p 8000 tracker_development.asgi:application
+elif [ -x "$(command -v gunicorn)" ]; then
+    echo "Using gunicorn server"
+    gunicorn --bind 0.0.0.0:8000 tracker_development.wsgi
+#    gunicorn --bind 0.0.0.0:8000 tracker_development.asgi:application -k uvicorn.workers.UvicornWorker
 else
     echo "Gunicorn not installed: Using built-in server."
 #    watchmedo shell-command --patterns="*.css" -R -c "python manage.py collectstatic --noinput" &

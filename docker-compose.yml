@@ -1,7 +1,6 @@
 version: "3.7"
 services:
   app:
-#    image: "esamarathon/tracker:latest"
     build: 
       context: .
       dockerfile: Dockerfile
@@ -11,14 +10,12 @@ services:
     volumes:
       - "./db:/app/tracker_development/db"
       - "./blank.json:/app/tracker_development/blank.json"
-#      - "./tracker/:/app/tracker_development/donation-tracker/"
       - "./local.py:/app/tracker_development/tracker_development/local.py"
       - "static:/var/www/html/static:rw"
     environment:
       - TRACKER_ALLOWED_HOSTS="localhost, esatracker.eu.ngrok.io"
       - TRACKER_DOMAIN="localhost"
       - TRACKER_DEBUG=True
-#      - TRACKER_DATABASES='{"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": "db/testdb"}}'
       - TRACKER_TIME_ZONE="Europe/Amsterdam"
       - TRACKER_SITE_NAME="ESA Dev Tracker"
       - TRACKER_SITE_PREFIX="/"
@@ -30,6 +27,35 @@ services:
       - TRACKER_USE_NEW_DONATE_LAYOUT=False
     ports:
       - "8000:8000"
+#  app_ws:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    stdin_open: true # docker run -i
+#    tty: true        # docker run -t
+##    entrypoint: /bin/bash
+#    entrypoint: daphne -b 0.0.0.0 -p 8001 tracker_development.asgi:application
+##    entrypoint: gunicorn --bind 0.0.0.0:8001 tracker_development.asgi:application -k uvicorn.workers.UvicornWorker
+#    volumes:
+#      - "./db:/app/tracker_development/db"
+#      - "./blank.json:/app/tracker_development/blank.json"
+#      - "./local.py:/app/tracker_development/tracker_development/local.py"
+#      - "static:/var/www/html/static:rw"
+#    environment:
+#      - TRACKER_ALLOWED_HOSTS="localhost, esatracker.eu.ngrok.io"
+#      - TRACKER_DOMAIN="localhost"
+#      - TRACKER_DEBUG=True
+#      - TRACKER_TIME_ZONE="Europe/Amsterdam"
+#      - TRACKER_SITE_NAME="ESA Dev Tracker"
+#      - TRACKER_SITE_PREFIX="/"
+#      - TRACKER_SECRET_KEY="HAhAHAHhahahahhahahhahahhahahahahha"
+#      - TRACKER_STATIC_URL="/static"
+#      - TRACKER_STATIC_ROOT="/var/www/html/static"
+#      - TRACKER_HAS_GDOC=False
+#      - TRACKER_HAS_EMAIL=False
+#      - TRACKER_USE_NEW_DONATE_LAYOUT=False
+#    ports:
+#      - "8001:8001"
   web:
     image: nginx:latest
     volumes:

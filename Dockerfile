@@ -22,7 +22,7 @@ FROM python:3.12
 
 WORKDIR /app
 
-RUN pip install django~=3.2
+RUN pip install django~=5.0
 RUN django-admin startproject tracker_development
 
 WORKDIR /app/tracker_development/donation-tracker
@@ -39,7 +39,8 @@ COPY --from=client /app/tracker/ tracker
 COPY ./tracker/tracker tracker
 COPY ./tracker/setup.py ./
 RUN pip install -e .
-#RUN pip install 'uvicorn[daphne]' gunicorn
+RUN pip install daphne
+#RUN pip install gunicorn
 
 WORKDIR /app/tracker_development
 COPY ./settings.py ./wsgi.py ./asgi.py ./local_statics.py ./routing.py ./urls.py /app/tracker_development/tracker_development/
