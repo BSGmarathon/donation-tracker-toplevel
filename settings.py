@@ -4,14 +4,14 @@ import os
 
 
 try:
-    import tracker_development.local as local
+    import local as local
     print('Loaded normal settings')
 except ImportError:
     try:
-        import tracker_development.local_statics as local
+        import local_statics as local
         print('Loaded statics settings')
     except ImportError:
-        import tracker_development.example_local as local
+        import example_local as local
 
 # new settings
 TRACKER_HAS_CELERY = local.TRACKER_HAS_CELERY
@@ -144,10 +144,10 @@ MIDDLEWARE = [
 
 SESSION_COOKIE_NAME = 'tracker_session'
 
-ROOT_URLCONF = 'tracker_development.urls'
+ROOT_URLCONF = 'urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'tracker_development.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 TEMPLATES = [
     {
@@ -190,7 +190,7 @@ EMAIL_BACKEND = local.EMAIL_BACKEND
 # Pull in the tracker's lookup channels
 from tracker import ajax_lookup_channels
 AJAX_LOOKUP_CHANNELS = ajax_lookup_channels.AJAX_LOOKUP_CHANNELS
-ASGI_APPLICATION = 'tracker_development.routing.application'
+ASGI_APPLICATION = 'routing.application'
 CHANNEL_LAYERS = {'default': {'BACKEND': 'channels.layers.InMemoryChannelLayer'}}
 
 # AUTHENTICATION_BACKENDS = (

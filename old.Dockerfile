@@ -22,16 +22,39 @@ FROM python:3.12
 
 WORKDIR /app
 
-COPY ./tracker donation-tracker
-COPY --from=client /app/tracker/ donation-tracker
+RUN pip install django~=3.2
+RUN django-admin startproject tracker_development
 
-RUN pip install ./donation-tracker
+WORKDIR /app/tracker_development/donation-tracker
 
-RUN pip install django~=5.0
-#RUN pip install daphne
+COPY \
+  ./tracker/__init__.py \
+  ./tracker/.flake8 \
+  ./tracker/pyproject.toml \
+  ./tracker/README.md \
+  ./tracker/setup.py \
+  ./
 
-COPY ./settings.py ./wsgi.py ./asgi.py ./manage.py ./local_statics.py ./routing.py ./urls.py /app/
+COPY --from=client /app/tracker/ tracker
+COPY ./tracker/tracker tracker
+RUN pip install -e .
+RUN pip install 'uvicorn[daphne]' gunicorn
+
+WORKDIR /app/tracker_development
+COPY ./settings.py ./wsgi.py ./asgi.py ./local_statics.py ./routing.py ./urls.py /app/tracker_development/tracker_development/
 COPY ./entrypoint.sh ./
+RUN mkdir db
+
+#RUN pip install ./donation-tracker
+
+RUN apt update
+RUN apt install -y locales
+#RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+RUN echo "nl_NL.UTF-8 UTF-8" >> /etc/locale.gen
+#RUN locale-gen en_US.UTF-8
+RUN locale-gen nl_NL.UTF-8
+#ENV LC_ALL en_US.UTF-8
+ENV LC_ALL nl_NL.UTF-8
 
 RUN mkdir -p /var/www/html/static
 RUN python manage.py collectstatic --noinput
@@ -46,4 +69,3 @@ RUN python manage.py collectstatic --noinput
 #RUN yes ${superuserpassword} | python manage.py changepassword ${superusername}
 
 ENTRYPOINT ./entrypoint.sh
-

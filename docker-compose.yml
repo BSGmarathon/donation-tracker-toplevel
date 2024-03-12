@@ -9,10 +9,10 @@ services:
     tty: true        # docker run -t
 #    entrypoint: /bin/bash
     volumes:
-      - "./db:/app/tracker_development/db"
+      - "./db:/app/db"
       - "./blank.json:/app/tracker_development/blank.json"
 #      - "./tracker/:/app/tracker_development/donation-tracker/"
-      - "./local.py:/app/tracker_development/tracker_development/local.py"
+      - "./local.py:/app/local.py"
       - "static:/var/www/html/static:rw"
     environment:
       - TRACKER_ALLOWED_HOSTS="localhost, esatracker.eu.ngrok.io"
