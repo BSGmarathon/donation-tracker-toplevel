@@ -1,6 +1,7 @@
 import os
 
 ALLOWED_HOSTS = ['localhost']
+CSRF_TRUSTED_ORIGINS = ['http://localhost']
 USE_X_FORWARDED_HOST = True
 
 TRACKER_HAS_CELERY = False
