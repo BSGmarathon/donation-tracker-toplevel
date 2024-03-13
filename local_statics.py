@@ -1,6 +1,7 @@
 import os
 
 ALLOWED_HOSTS = ['localhost']
+USE_X_FORWARDED_HOST = True
 
 TRACKER_HAS_CELERY = False
 TRACKER_PRIVACY_POLICY_URL = ''

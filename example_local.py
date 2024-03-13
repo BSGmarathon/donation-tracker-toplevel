@@ -8,6 +8,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     'your.domain.name',
 ]
+USE_X_FORWARDED_HOST = True
 
 TRACKER_HAS_CELERY = False
 TRACKER_PRIVACY_POLICY_URL = ''
