@@ -47,7 +47,7 @@ COPY ./settings.py ./wsgi.py ./asgi.py ./local_statics.py ./routing.py ./urls.py
 COPY ./entrypoint.sh ./
 RUN mkdir db
 
-#RUN pip install ./donation-tracker
+#RUN pip install ../donation-tracker
 
 RUN apt update
 RUN apt install -y locales

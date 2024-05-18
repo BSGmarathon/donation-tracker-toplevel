@@ -67,3 +67,4 @@ Build with `Dockerfile-statics`.
 1. Locale setting: https://stackoverflow.com/questions/18646520/unsupported-locale-setting-python-django-how-to-solve-this#24819625
 2. Generated static file location: /donation-tracker/tracker/gen
 3. Username and password: Duncan, you used the username "duncte123" and the password "password"
+4. bsghost : testuser
