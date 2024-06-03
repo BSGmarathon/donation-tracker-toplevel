@@ -9,7 +9,7 @@ application = ProtocolTypeRouter({
     'websocket': AllowedHostsOriginValidator(
         AuthMiddlewareStack(
             URLRouter(
-                [path('', URLRouter(tracker.routing.websocket_urlpatterns))]
+                [path('tracker/', URLRouter(tracker.routing.websocket_urlpatterns))]
             )
         )
     ),
