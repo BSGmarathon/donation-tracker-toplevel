@@ -13,6 +13,7 @@ services:
       - "./local.py:/app/tracker_development/tracker_development/local.py"
       - "static:/var/www/html/static:rw"
     environment:
+      - LC_ALL=en_GB.UTF-8
       - TRACKER_ALLOWED_HOSTS="localhost, esatracker.eu.ngrok.io"
       - TRACKER_DOMAIN="localhost"
       - TRACKER_DEBUG=True
