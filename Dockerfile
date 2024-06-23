@@ -63,6 +63,8 @@ ENV LC_ALL nl_NL.UTF-8
 RUN mkdir -p /var/www/html/static
 RUN python manage.py collectstatic --noinput
 
+COPY ./fonts /var/www/html/fonts
+
 #RUN ["python", "manage.py", "migrate"]
 #RUN ["python", "manage.py", "loaddata", "blank.json"]
 
