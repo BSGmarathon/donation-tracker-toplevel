@@ -11,8 +11,8 @@ for font in 'cubano-regular-webfont.eot' 'cubano-regular-webfont.woff' 'cubano-r
  'MuseoSans_300_Italic-webfont.eot' 'MuseoSans_300_Italic-webfont.woff' 'MuseoSans_300_Italic-webfont.ttf' 'MuseoSans_300_Italic-webfont.svg' ;
   do
     if [ ! -f "/var/www/html/static/res/fonts/$font" ]; then
-      echo "https://gamesdonequick.com/static/res/fonts/$font"
-      curl "https://gamesdonequick.com/static/res/fonts/$font" -o "/var/www/html/static/res/fonts/$font"
+      echo "https://tracker.gamesdonequick.com/static/res/fonts/$font"
+      curl "https://tracker.gamesdonequick.com/static/res/fonts/$font" -o "/var/www/html/static/res/fonts/$font"
     fi
   done
 
