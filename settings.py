@@ -179,7 +179,6 @@ INSTALLED_APPS = [
     'tracker',
     'rest_framework',
     'timezone_field',
-    'ajax_select',
     'mptt',
 ]
 
@@ -189,8 +188,6 @@ EMAIL_BACKEND = local.EMAIL_BACKEND
 # * * * * * ($DONATIONS_LOCATION/manage.py send_queued_mail >> send_mail.log 2>&1)
 
 # Pull in the tracker's lookup channels
-from tracker import ajax_lookup_channels
-AJAX_LOOKUP_CHANNELS = ajax_lookup_channels.AJAX_LOOKUP_CHANNELS
 ASGI_APPLICATION = 'tracker_development.routing.application'
 CHANNEL_LAYERS = {'default': {'BACKEND': 'channels.layers.InMemoryChannelLayer'}}
 
