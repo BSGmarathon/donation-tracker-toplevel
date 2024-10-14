@@ -1,5 +1,4 @@
 #!/bin/sh
-python manage.py makemigrations --merge --noinput
 python manage.py migrate --noinput
 
 # Make the folder where we are going to store the fonts

@@ -41,30 +41,17 @@ But you could probably get away with the development image if the load is small.
 
 ## Docker images
 
-Typically there are three classes of images used in the project.
+There's a single docker image, you will need to provide your own webserver to serve the static files.
 
 ```
 ghcr.io/bsgmarathon/tracker:latest
-esamarathon/tracker:latest
-esamarathon/tracker:production
 ```
-Production builds. This is the recommended builds if you want to deploy a tracker instance for general use.
-Build with `Dockerfile-production`.
 
-```
-esamarathon/tracker:development
-```
-are for development builds. It uses the regular `Dockerfile` for building and is recommended for developers working on the project.
-
-```
-esamarathon/tracker-statics:latest
-```
-Nginx webserver with the results of collectstatic stored in `/var/www/html/static/`
-Useful for simple production setups to serve the tracker static files, such as stylesheets and images.
-Build with `Dockerfile-statics`.
+The docker compose file has an example of serving static files
 
 ## Trouble shooting
 1. Locale setting: https://stackoverflow.com/questions/18646520/unsupported-locale-setting-python-django-how-to-solve-this#24819625
 2. Generated static file location: /donation-tracker/tracker/gen
 3. Username and password: Duncan, you used the username "duncte123" and the password "password"
 4. bsghost : testuser
+5. Did you add the new migrations to git?
