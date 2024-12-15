@@ -1,20 +1,26 @@
-FROM node:18 AS client
+FROM node:20 AS client
 
 WORKDIR /app
 
 COPY ./tracker/package.json ./tracker/yarn.lock ./
-RUN yarn
-
 COPY \
   ./tracker/.browserslistrc \
   ./tracker/karma.conf.js \
   ./tracker/declarations.d.ts \
   ./tracker/postcss.config.js \
+  ./tracker/prettier.config.js \
+  ./tracker/tsconfig.json \
+  ./tracker/.yarnrc.yml \
   ./tracker/webpack.config.js \
   ./
 COPY ./tracker/bundles bundles
 COPY ./tracker/design design
 COPY ./tracker/tracker tracker
+COPY ./tracker/.yarn .yarn
+
+RUN corepack enable
+
+RUN yarn install
 
 RUN yarn build
 
