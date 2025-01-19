@@ -1,28 +1,28 @@
-FROM node:20 AS client
-
-WORKDIR /app
-
-COPY ./tracker/package.json ./tracker/yarn.lock ./
-COPY \
-  ./tracker/.browserslistrc \
-  ./tracker/karma.conf.js \
-  ./tracker/declarations.d.ts \
-  ./tracker/postcss.config.js \
-  ./tracker/prettier.config.js \
-  ./tracker/tsconfig.json \
-  ./tracker/.yarnrc.yml \
-  ./tracker/webpack.config.js \
-  ./
-COPY ./tracker/bundles bundles
-COPY ./tracker/design design
-COPY ./tracker/tracker tracker
-COPY ./tracker/.yarn .yarn
-
-RUN corepack enable
-
-RUN yarn install
-
-RUN yarn build
+#FROM node:20 AS client
+#
+#WORKDIR /app
+#
+#COPY ./tracker/package.json ./tracker/yarn.lock ./
+#COPY \
+#  ./tracker/.browserslistrc \
+#  ./tracker/karma.conf.js \
+#  ./tracker/declarations.d.ts \
+#  ./tracker/postcss.config.js \
+#  ./tracker/prettier.config.js \
+#  ./tracker/tsconfig.json \
+#  ./tracker/.yarnrc.yml \
+#  ./tracker/webpack.config.js \
+#  ./
+#COPY ./tracker/bundles bundles
+#COPY ./tracker/design design
+#COPY ./tracker/tracker tracker
+#COPY ./tracker/.yarn .yarn
+#
+#RUN corepack enable
+#
+#RUN yarn install
+#
+#RUN yarn build
 
 FROM python:3.12
 
@@ -39,14 +39,27 @@ COPY \
   ./tracker/pyproject.toml \
   ./tracker/README.md \
   ./tracker/setup.py \
+  ./tracker/.browserslistrc \
+  ./tracker/karma.conf.js \
+  ./tracker/declarations.d.ts \
+  ./tracker/postcss.config.js \
+  ./tracker/prettier.config.js \
+  ./tracker/tsconfig.json \
+  ./tracker/.yarnrc.yml \
+  ./tracker/package.json \
+  ./tracker/yarn.lock \
+  ./tracker/webpack.config.js \
   ./
+COPY ./tracker/bundles bundles
+COPY ./tracker/design design
+COPY ./tracker/.yarn .yarn
 
-COPY --from=client /app/tracker/ tracker
+#COPY --from=client /app/tracker/ tracker
 COPY ./tracker/tracker tracker
 COPY ./tracker/setup.py ./
-RUN pip install -e .
 RUN pip install daphne
 #RUN pip install gunicorn
+RUN pip install -e .
 
 WORKDIR /app/tracker_development
 COPY ./settings.py ./wsgi.py ./asgi.py ./local_statics.py ./routing.py ./urls.py /app/tracker_development/tracker_development/

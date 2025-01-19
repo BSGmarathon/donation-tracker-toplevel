@@ -29,11 +29,9 @@ if [ -x "$(command -v daphne)" ]; then
     echo "Using daphne server"
   daphne -b 0.0.0.0 -p 8000 tracker_development.asgi:application
 elif [ -x "$(command -v gunicorn)" ]; then
-    echo "Using gunicorn server"
+    echo "Using gunicorn server (pls use daphne)"
     gunicorn --bind 0.0.0.0:8000 tracker_development.wsgi
-#    gunicorn --bind 0.0.0.0:8000 tracker_development.asgi:application -k uvicorn.workers.UvicornWorker
 else
-    echo "Gunicorn not installed: Using built-in server."
-#    watchmedo shell-command --patterns="*.css" -R -c "python manage.py collectstatic --noinput" &
+    echo "Daphne and Gunicorn not installed: Using built-in server."
     python manage.py runserver 0.0.0.0:8000
 fi
