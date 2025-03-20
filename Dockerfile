@@ -1,4 +1,4 @@
-FROM node:20 AS client
+FROM node:20-alpine AS client
 
 WORKDIR /app
 
@@ -18,11 +18,9 @@ COPY ./tracker/design design
 COPY ./tracker/tracker tracker
 COPY ./tracker/.yarn .yarn
 
-RUN corepack enable
-
-RUN yarn install
-
-RUN yarn build
+RUN corepack enable && \
+    yarn install && \
+    yarn build
 
 FROM python:3.12
 
@@ -65,21 +63,21 @@ RUN pip install -e .
 WORKDIR /app/tracker_development
 COPY ./settings.py ./wsgi.py ./asgi.py ./local_statics.py ./routing.py ./urls.py /app/tracker_development/tracker_development/
 COPY ./entrypoint.sh ./
-RUN mkdir db
 
-RUN apt update
-RUN apt install -y locales
-RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
-RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen
-RUN echo "nl_NL.UTF-8 UTF-8" >> /etc/locale.gen
-RUN locale-gen en_US.UTF-8
-RUN locale-gen en_GB.UTF-8
-RUN locale-gen nl_NL.UTF-8
+RUN mkdir db && \
+    apt update && \
+    apt install -y locales && \
+    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen &&  \
+    echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen && \
+    echo "nl_NL.UTF-8 UTF-8" >> /etc/locale.gen && \
+    locale-gen en_US.UTF-8 && \
+    locale-gen en_GB.UTF-8 && \
+    locale-gen nl_NL.UTF-8
 #ENV LC_ALL en_US.UTF-8
 ENV LC_ALL nl_NL.UTF-8
 
-RUN mkdir -p /var/www/html/static
-RUN python manage.py collectstatic --noinput
+RUN mkdir -p /var/www/html/static && \
+    python manage.py collectstatic --noinput
 
 COPY ./fonts /var/www/html/fonts
 
