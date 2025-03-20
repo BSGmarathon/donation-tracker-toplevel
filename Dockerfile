@@ -2,8 +2,7 @@ FROM node:20-alpine AS client
 
 WORKDIR /app
 
-COPY ./tracker/package.json ./tracker/yarn.lock ./
-COPY \
+COPY ./tracker/package.json ./tracker/yarn.lock \
   ./tracker/.browserslistrc \
   ./tracker/karma.conf.js \
   ./tracker/declarations.d.ts \
