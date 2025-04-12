@@ -1,4 +1,4 @@
-FROM node:20-alpine AS client
+FROM node:22-alpine AS client
 
 WORKDIR /app
 
@@ -21,11 +21,11 @@ RUN corepack enable && \
     yarn install && \
     yarn build
 
-FROM python:3.12
+FROM python:3.13
 
 WORKDIR /app
 
-RUN pip install django~=5.0
+RUN pip install django~=5.2
 RUN django-admin startproject tracker_development
 
 WORKDIR /app/tracker_development/donation-tracker
