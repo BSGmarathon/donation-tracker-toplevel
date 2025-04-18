@@ -10,6 +10,7 @@ TRACKER_SWEEPSTAKES_URL = ''
 TRACKER_PAGINATION_LIMIT = 500
 TRACKER_LOGO = ''
 PAYPAL_TEST = True
+MARATHON_ORG = ''
 
 # this is used as part of the auto-mailing services to identify where
 # to redirect registration and password resets to
