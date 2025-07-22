@@ -10,6 +10,7 @@ ALLOWED_HOSTS = [
 ]
 CSRF_TRUSTED_ORIGINS = ['http://localhost', 'https://your.domain.name']
 USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 TRACKER_HAS_CELERY = False
 TRACKER_PRIVACY_POLICY_URL = ''
